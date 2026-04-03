@@ -9,7 +9,25 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 <style>
     /* ── LAPTOP ANIMATION STYLES ── */
+.name-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px; /* المسافة بين الاسم واللابتوب */
+}
 
+.laptop-animation {
+  width: 80px; /* حجم اللابتوب بجانب الاسم */
+  height: 80px;
+  color: var(--gold); /* يتلون باللون الذهبي الخاص بكِ */
+  animation: float 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* تأثير الارتفاع والانخفاض */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
 
 /* حركة الأكواد داخل الشاشة */
 .code-line {
@@ -19,21 +37,6 @@
 }
 
 .line-2 { animation-delay: 0.5s; }
-
-@keyframes code-write {
-  0% { stroke-dashoffset: 10; opacity: 0; }
-  50% { stroke-dashoffset: 0; opacity: 1; }
-  100% { stroke-dashoffset: -10; opacity: 0; }
-}
-
-/* تعديل للجوال ليصبح الحجم متناسقاً */
-@media (max-width: 768px) {
-  .laptop-animation {
-    width: 40px;
-    height: 40px;
-  }
-  .name-wrapper { gap: 10px; }
-}
 :root {
   /* لوحة الألوان الدافئة والراقية */
   --bg: #1a1917;          
@@ -82,59 +85,7 @@ html { scroll-behavior: smooth; }
   50% { transform: translateY(-20px) rotate(2deg); }
 }
 
-/* ── تنسيق الجوال (Mobile) ── */
-@media (max-width: 768px) {
-  
-  /* جعل الاسم واللابتوب في سطر واحد */
-  .hero-content-wrapper {
-    flex-direction: row !important; 
-    flex-wrap: wrap; /* للسماح للوصف بالنزول تحت */
-    justify-content: center;
-    gap: 15px;
-    text-align: left;
-  }
 
-  .hero-text-side {
-    flex: none;
-    width: auto;
-  }
-
-  .hero-name {
-    font-size: 3rem !important; /* تصغير الخط ليناسب الجوار */
-    line-height: 1;
-  }
-
-  .hero-name .line2 {
-    padding-left: 0;
-  }
-
-  /* تصغير اللابتوب ليأتي بجانب الاسم */
-  .hero-visual-side {
-    flex: none;
-    order: 2; /* يضمن ظهوره بعد "Sana" */
-  }
-
-  .laptop-visual-container {
-    width: 60px !important; 
-    height: 60px !important;
-  }
-
-  /* الوصف ينزل تحتهم */
-  .hero-desc {
-    width: 100%;
-    margin-top: 20px;
-    border-left: none;
-    border-top: 1px solid var(--gold);
-    padding: 15px 0 0 0;
-    font-size: 0.85rem;
-  }
-  
-  .hero-eyebrow {
-    width: 100%;
-    text-align: center;
-    justify-content: center;
-  }
-}
 body {
   background: var(--bg);
   color: var(--text);
@@ -172,6 +123,33 @@ nav {
   color: var(--text-muted); text-decoration:none; transition: 0.3s;
 }
 .nav-links a:hover { color:var(--gold); }
+
+/* ── HERO ── */
+#about {
+  min-height:100vh; padding:0 6%;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.hero-eyebrow {
+  font-family:'DM Mono',monospace; font-size:0.65rem;
+  letter-spacing:0.2em; color:var(--gold); text-transform:uppercase;
+  display:flex; align-items:center; gap:12px; margin-bottom:30px;
+}
+.hero-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size: clamp(4.5rem, 12vw, 11rem);
+  font-weight:300; line-height:0.9;
+  animation: fadeUp 1s ease;
+}
+.hero-name .line2 {
+  display:block; color:transparent;
+  -webkit-text-stroke: 1px rgba(212,180,101,0.4);
+  padding-left: 8vw;
+}
+.hero-desc {
+  margin-top:40px; max-width:480px;
+  font-size:0.95rem; color:var(--text-dim); line-height:1.9;
+  padding-left: 30px; border-left:1px solid var(--gold);
+}
 
 /* ── SECTIONS ── */
 section {
@@ -401,111 +379,198 @@ section.visible { opacity:1; transform:translateY(0); }
   margin: 5px; display: inline-block; font-size: 0.7rem; color: var(--gold); 
   font-family: 'DM Mono', monospace; 
 }
-
-@media(max-width:850px) {
-  .ov-side-layout { grid-template-columns: 1fr; gap: 30px; }
-}
-/* ── BACK TO PORTFOLIO BUTTON (Muted Gold) ── */
-.ov-close {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px; /* المسافة بين السهم والنص */
-  background: none;
-  border: none;
-  color: var(--gold-dim); /* ذهبي مطفي وناعم */
-  font-family: 'DM Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.25em; /* تباعد الحروف للأناقة */
-  text-transform: uppercase;
-  cursor: pointer;
-  padding: 8px 0; /* مساحة ضغط عمودية */
-  transition: all 0.4s ease;
-  margin-bottom: 60px; /* مسافة عن المحتوى */
-}
-
-/* تأثير السهم (السهم يظهر ناعماً ورفيعاً) */
-.ov-close::before {
-  content: '←'; /* سهم بسيط ونحيف */
-  font-size: 1rem;
-  font-weight: 300; /* أنيق ونحيف */
-  transition: transform 0.3s ease;
-  display: inline-block;
-}
-
-/* تأثير الـ Hover */
-.ov-close:hover {
-  color: var(--gold-light); /* يفتح لونه قليلاً عند مرور الماوس */
-}
-
-/* حركة السهم عند الـ Hover */
-.ov-close:hover::before {
-  transform: translateX(-6px); /* السهم يتحرك قليلاً لليسار للإشارة للخلف */
-}
-/* ── RESPONSIVE FIXES ── */
 @media (max-width: 768px) {
-  /* تصغير حجم الهيدر */
-  nav { padding: 15px 5%; }
-  .nav-links { display: none; } /* إخفاء القائمة الطويلة في الجوال (يمكنكِ لاحقاً إضافة منيو همبرغر) */
-  
+    /* تثبيت زر المنيو في الزاوية العلوية اليمنى */
+    .menu-toggle {
+        display: flex !important;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        z-index: 10001; /* أعلى من القائمة المنسدلة */
+        position: fixed; /* يبقى في مكانه حتى لو فتحت القائمة */
+        top: 25px;
+        right: 6%;
+        padding: 10px;
+    }
 
-  /* شبكة المشاريع - جعلها عمود واحد */
-  .proj-grid {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
-  .proj-thumb { height: 200px; }
+    .bar {
+        width: 20px; /* حجم صغير جداً */
+        height: 1px;
+        background: var(--gold-dim); /* ذهبي مطفي */
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-  /* الأوفرلاي (تفاصيل المشروع) */
-  .ov-inner { padding: 40px 5%; }
-  .ov-side-layout { 
-    grid-template-columns: 1fr; /* الصورة فوق النص */
-    gap: 20px; 
-  }
-  .ov-full-layout h2 { font-size: 2.2rem !important; }
-  .ov-side-layout h2 { font-size: 2rem !important; }
-  
-  /* شبكة المهارات والكورسات */
-  .skills-grid { grid-template-columns: repeat(2, 1fr); }
-  .courses-grid { grid-template-columns: 1fr; }
+    /* عندما تفتح القائمة (Active) يتحول لـ X مطفي فوقها */
+    .menu-toggle.active .bar:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+    }
+    .menu-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle.active .bar:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
+    }
 
-  /* أزرار التواصل */
-  .contact-links { flex-direction: column; width: 100%; }
-  .clink { justify-content: center; width: 100%; }
+    /* القائمة المنسدلة المطفية */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background: var(--bg); /* نفس لون الخلفية */
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        transition: 0.5s ease;
+        z-index: 10000;
+        backdrop-filter: blur(10px);
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+    
+    /* الروابط داخل القائمة */
+    .nav-links a {
+        font-size: 0.8rem !important; /* حجم مطفي وصغير */
+        color: var(--gold-dim);
+        letter-spacing: 0.3em;
+    }
 }
-/* ── تعديلات الجوال (Responsive) ── */
+/* ── كود التنسيق الكامل والنهائي للجوال (Mobile Elite Version) ── */
+@media (max-width: 768px) {
 
-/* إخفاء مؤشر الماوس المخصص في الجوال لأنه يسبب مشاكل في اللمس */
+    /* 1. إعدادات القسم الرئيسي (Hero Section) */
+    #about {
+        padding: 100px 5% 60px 5% !important;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero-content-wrapper {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 25px;
+        width: 100%;
+    }
+
+    /* اللابتوب: يظهر كأيقونة عائمة في المنتصف فوق الاسم */
+    .hero-visual-side {
+        order: 1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .laptop-visual-container {
+        width: 90px !important;
+        height: 90px !important;
+        filter: drop-shadow(0 0 15px rgba(212, 180, 101, 0.3));
+    }
+
+    /* الاسم: متمركز وبحجم خط مثالي للجوال */
+    .hero-text-side {
+        order: 2;
+        width: 100%;
+    }
+
+    .hero-name {
+        font-size: 3.2rem !important;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+    }
+
+    .hero-name .line2 {
+        padding-left: 0 !important;
+        display: block;
+        margin-top: 5px;
+        -webkit-text-stroke: 1px var(--gold-dim);
+    }
+
+    /* الوصف: بطاقة تعريفية تحت الاسم */
+    .hero-desc {
+        width: 100%;
+        max-width: 320px;
+        margin: 25px auto 0 auto;
+        padding: 20px 0 0 0;
+        border-left: none !important;
+        border-top: 1px solid var(--border-strong);
+        font-size: 0.88rem;
+        color: var(--text-dim);
+        line-height: 1.8;
+    }
+
+    .hero-eyebrow {
+        justify-content: center;
+        margin-bottom: 15px;
+        font-size: 0.6rem;
+    }
+
+    /* 2. القائمة العلوية (Navigation) */
+    nav { padding: 15px 5%; }
+    .menu-toggle { display: flex; flex-direction: column; gap: 6px; }
+    
+    .nav-links {
+        position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+        background: var(--bg); flex-direction: column; 
+        justify-content: center; align-items: center; gap: 30px;
+        transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        z-index: 9998; backdrop-filter: blur(15px);
+    }
+    .nav-links.active { right: 0; }
+    .nav-links a { font-size: 1.1rem; letter-spacing: 0.2em; }
+
+    /* 3. شبكة المشاريع والمهارات (Grids) */
+    .proj-grid {
+        grid-template-columns: 1fr !important;
+        gap: 30px;
+        padding: 0;
+    }
+    .proj-thumb { height: 200px; }
+    .proj-overlay { padding: 20px; }
+
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px;
+    }
+    .skill-chip { padding: 15px 5px; }
+
+    .courses-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* 4. أزرار التواصل (Contact) */
+    .contact-links {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+    .clink {
+        width: 100%;
+        justify-content: center;
+        padding: 14px;
+    }
+
+    /* 5. تفاصيل المشاريع (Overlay) */
+    .ov-inner { padding: 60px 5% 30px 5%; }
+    .ov-side-layout { grid-template-columns: 1fr; gap: 25px; }
+    .ov-img-side, .ov-img-full { max-height: 300px; }
+    .ov-close { margin-bottom: 30px; }
+}
+
+/* تعطيل الماوس المخصص للمس */
 @media (pointer: coarse) {
-  .cursor, .cursor-ring { display: none; }
+    .cursor, .cursor-ring { display: none; }
 }
-/* تنسيق زر الثلاث شرطات */
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  gap: 6px;
-  cursor: pointer;
-  z-index: 9999; /* ليكون فوق كل شيء */
-}
-.bar { width: 25px; height: 1px; background: var(--gold); transition: 0.4s; }
 
-@media (max-width: 768px) {
-  .menu-toggle { display: flex; }
-
-
-  /* عند تفعيل القائمة */
-  .nav-links.active { right: 0; }
-
-  .nav-links a {
-    font-size: 1.2rem; /* خط كبير وواضح */
-    letter-spacing: 0.3em;
-    color: var(--gold-light);
-  }
-
-  /* تأثير تحويل الشرطات إلى X عند الفتح */
-  .menu-toggle.active .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
-  .menu-toggle.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-}
 </style>
 </head>
 <body>
@@ -545,15 +610,12 @@ section.visible { opacity:1; transform:translateY(0); }
 
     <div class="hero-visual-side">
       <div class="laptop-visual-container">
-  <svg class="laptop-icon-big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="3" y="4" width="18" height="12" rx="2" ry="2" />
-    <path d="M2 20h20" />
-    
-    <line class="code-line line-1" x1="7" y1="8" x2="13" y2="8" stroke-width="0.8" />
-    <line class="code-line line-2" x1="7" y1="11" x2="16" y2="11" stroke-width="0.8" />
-    <line class="code-line line-3" x1="7" y1="14" x2="11" y2="14" stroke-width="0.8" />
-  </svg>
-</div>
+        <svg class="laptop-icon-big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="12" rx="2" ry="2" />
+          <path d="M2 20h20" />
+          <path class="screen-lines" d="M9 8l3 3-3 3" />
+        </svg>
+      </div>
     </div>
 
   </div>
