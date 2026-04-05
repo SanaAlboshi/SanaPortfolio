@@ -355,30 +355,8 @@ section.visible { opacity:1; transform:translateY(0); }
 .overlay.active { display: block; }
 .ov-inner { max-width: 1100px; margin: 0 auto; padding: 80px 6%; }
 
-/* التنسيق الطولي (لمعاً والخريطة) */
-.ov-full-layout { 
-  display: flex; flex-direction: column; gap: 40px; 
-  max-width: 900px; margin: 0 auto; 
-}
-.ov-img-full { 
-  width: 100%; max-height: 550px; object-fit: cover; 
-  border-radius: 12px; border: 1px solid var(--border-strong); 
-}
 
-/* التنسيق الجانبي (لبقية المشاريع) */
-.ov-side-layout { 
-  display: grid; grid-template-columns: 1.2fr 1fr; 
-  gap: 50px; align-items: start; 
-}
-.ov-img-side { 
-  width: 100%; border-radius: 8px; border: 1px solid var(--border); 
-}
 
-.ov-tag { 
-  background: var(--surface2); padding: 6px 14px; border: 1px solid var(--border); 
-  margin: 5px; display: inline-block; font-size: 0.7rem; color: var(--gold); 
-  font-family: 'DM Mono', monospace; 
-}
 @media (max-width: 768px) {
     /* تثبيت زر المنيو في الزاوية العلوية اليمنى */
     .menu-toggle {
@@ -590,6 +568,64 @@ section.visible { opacity:1; transform:translateY(0); }
     color: var(--bg);
 }
 .ov-close::before { content: '←'; }
+/* ── تنسيق المحتوى داخل النافذة (الصورة كاملة فوق والكلام تحت) ── */
+.ov-side-layout {
+    display: flex;
+    flex-direction: column; /* جعل العناصر تحت بعض */
+    gap: 25px; /* مسافة بسيطة وأنيقة بين الصورة والكلام */
+    max-width: 950px; /* عرض مناسب جداً لعرض الصور والكلام */
+    margin: 0 auto;
+    align-items: center; /* تمركز الصورة والكلام في المنتصف */
+}
+
+/* 2. حاوية الصورة - تتكيف مع حجم الصورة */
+.ov-img-container {
+    width: 100%;
+    /* إلغاء الـ max-height لكي تظهر الصورة كاملة بأبعادها */
+    height: auto; 
+    overflow: visible; /* لضمان عدم قص أي جزء */
+    border-radius: 4px; /* زوايا أنيقة وبسيطة */
+    border: 1px solid rgba(212, 180, 101, 0.05); /* إطار ذهبي مطفي جداً */
+    background: rgba(212, 180, 101, 0.01); /* خلفية خفيفة جداً */
+    display: flex;
+    justify-content: center; /* تمركز الصورة داخل الحاوية */
+}
+
+/* 3. تنسيق الصورة نفسها لظهورها كاملة */
+.ov-img-side {
+    max-width: 100%; /* لكي لا تخرج عن عرض الشاشة */
+    height: auto; /* للحفاظ على أبعاد الصورة الأصلية (Proportions) */
+    display: block;
+    object-fit: contain; /* الكود السحري: يضمن ظهور الصورة "كاملة" دون قص */
+}
+
+/* 4. حاوية النص - تأخذ العرض الكامل */
+.ov-text-container {
+    width: 100%;
+    text-align: left; /* ليبقى الكلام مرتباً من اليسار بالإنجليزية */
+    padding-bottom: 60px; /* مسافة تحت الكلام لراحة العين */
+}
+
+/* تنسيق إضافي لتبدو العناوين والقوائم مرتبة في العرض الكامل */
+.ov-description h4 {
+    border-left: 2px solid var(--gold-dim);
+    padding-left: 12px;
+    margin-top: 25px;
+    color: var(--gold-light);
+}
+
+.ov-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 35px;
+}
+
+@media (max-width: 768px) {
+    .ov-side-layout { gap: 15px; }
+    .ov-img-container { border: none; } /* إلغاء الإطار على الجوال */
+    .ov-text-container { text-align: center; } /* تمركز النص للجوال */
+}
 </style>
 </head>
 <body>
@@ -849,36 +885,118 @@ section.visible { opacity:1; transform:translateY(0); }
 const projects = {
     ma3an: {
         num: '01 / 04', 
-        title: 'Ma3an (معاً)', 
+        title: 'Ma3an (معاً) - Tour Management System', 
         img: 'static/imgt.png',
         desc: `
-            <p><strong style="color:var(--gold-dim)">The Challenge:</strong> Tour agencies struggle with group organization and fragmented communication.</p><br>
-            <p><strong style="color:var(--gold-dim)">The Solution:</strong> A unified platform for live tracking, real-time schedules, and supervisor dashboards.</p>
+            <div style="margin-bottom:20px">
+                <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">I. Market Research & Problem Identification</h4>
+                <p style="font-size:0.8rem; line-height:1.6; color:var(--text-dim)">
+                    Tour agencies face a critical gap in organized group trips, especially during Hajj & Umrah. Travelers frequently face fragmented communication and GPS disconnects. Current informal tools like WhatsApp groups fail to provide real-time logistics, leading to delays and safety risks.
+                </p>
+            </div>
+
+            <div style="margin-bottom:20px">
+                <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">II. Value Proposition & Competitive Advantage</h4>
+                <p style="font-size:0.8rem; line-height:1.6; color:var(--text-dim)">
+                    Ma3an offers a <b>Unified Selling Proposition (USP)</b>: A single platform connecting travelers and supervisors through live tracking, geofencing, and instant schedule updates. Unlike competitors, it integrates administrative dashboards with real-time field data.
+                </p>
+            </div>
+
+            <div style="margin-bottom:20px">
+                <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">III. Technical & Financial Feasibility</h4>
+                <ul style="padding-left:15px; font-size:0.75rem; color:var(--text-dim); line-height:1.6">
+                    <li><b>Scalability:</b> Built on a Django/PostgreSQL architecture capable of handling high-concurrency during peak seasons.</li>
+                    <li><b>Revenue Model:</b> Designed for a B2B SaaS model with Tiered Subscriptions (Basic, Pro, and Enterprise) and white-label options for large agencies.</li>
+                    <li><b>Cost Efficiency:</b> Minimized operational costs using Leaflet Open-Source maps and optimized API polling.</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom:10px">
+                <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">IV. Risk Management</h4>
+                <p style="font-size:0.75rem; color:var(--text-dim)">Addressing GPS accuracy in crowded areas and user privacy through clear consent protocols and data encryption.</p>
+            </div>
         `,
-        stack: ['Python', 'Django', 'MySQL', 'APIs']
-    },
-    realestate: {
-        num: '02 / 04', 
-        title: 'Real Estate Platform', 
-        img: 'static/imga.png',
-        desc: `<p>A property listing platform with advanced UI/UX controls and seamless Dark Mode integration using CSS variables.</p>`,
-        stack: ['Python', 'Django', 'JavaScript', 'CSS']
+        stack: ['Django', 'Geofencing','Python', 'HTML','CSS','JS', 'Mapping APIs', 'SQL', 'Figma ']
     },
     planteer: {
-        num: '03 / 04', 
-        title: 'Planteer Platform', 
+        num: '02 / 04', 
+        title: 'Planteer - Botanical Community Platform', 
         img: 'static/planteer.jpg',
-        desc: `<p>A full-stack botanical directory and community platform for plant enthusiasts with a refined design system.</p>`,
-        stack: ['Python', 'Django', 'JavaScript', 'HTML']
+        desc: `
+            <div style="margin-bottom:20px">
+                <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">Project Ecosystem</h4>
+                <p style="font-size:0.8rem; line-height:1.6; color:var(--text-dim)">
+                    A full-stack solution designed for plant enthusiasts to document biodiversity. The project focuses on "Crowdsourced Data," allowing users to build a global botanical directory.
+                </p>
+            </div>
+
+            <div style="margin-bottom:20px">
+                <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">Advanced Functional Requirements</h4>
+                <ul style="padding-left:15px; font-size:0.75rem; color:var(--text-dim); line-height:1.8">
+                    <li><b>User Authentication:</b> Robust registration system with personalized dashboards for managing contributions.</li>
+                    <li><b>Dynamic Content Management:</b> Full CRUD capabilities for adding plants, high-res images, and detailed care instructions.</li>
+                    <li><b>Smart Multi-Level Filtering:</b> Users can filter the entire database by plant category, country of origin, and growth climate.</li>
+                    <li><b>Community Interaction:</b> Integrated feedback system and botanical classification tags.</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">UI/UX Strategy</h4>
+                <p style="font-size:0.8rem; color:var(--text-dim)">Implementation of a responsive "Card-Based" layout with smooth CSS transitions to enhance the browsing experience of botanical data.</p>
+            </div>
+        `,
+        stack: ['Python', 'Django', 'HTML','CSS','JS', 'SQL', 'Figma']
     },
     taibah: {
-        num: '04 / 04', 
-        title: 'Interactive University Map', 
+        num: '03 / 04', 
+        title: 'Taibah Interactive Navigation', 
         img: 'static/imgl.png',
         desc: `
-            <p><strong style="color:var(--gold-dim)">The Solution:</strong> An interactive 2D/3D campus visualization with indoor navigation for Taibah University.</p>
+            <div style="margin-bottom:20px">
+                <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">The Navigation Crisis</h4>
+                <p style="font-size:0.8rem; line-height:1.6; color:var(--text-dim)">
+                    University campuses are becoming increasingly complex. Standard GPS tools (Google Maps) lack "Floor-Level" detail, causing significant delays for new students and visitors trying to find specific labs or offices.
+                </p>
+            </div>
+
+            <div style="margin-bottom:20px">
+                <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">Technical Innovation: Indoor Mapping</h4>
+                <p style="font-size:0.8rem; line-height:1.6; color:var(--text-dim)">
+                    Developed a specialized navigation engine using <b>HTML5 Canvas</b> to render building floor plans. The system uses a coordinate-based routing algorithm to guide users to their exact destination.
+                </p>
+            </div>
+
+            <div style="margin-bottom:20px">
+                <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">Dynamic Backend Integration</h4>
+                <ul style="padding-left:15px; font-size:0.75rem; color:var(--text-dim); line-height:1.6">
+                    <li><b>Google Sheets API:</b> Real-time updates for room occupants or schedule changes without code modification.</li>
+                    <li><b>Optimization:</b> Lightweight front-end rendering for low-bandwidth campus Wi-Fi.</li>
+                </ul>
+            </div>
         `,
-        stack: ['Python', 'JavaScript', 'Google Sheets API', 'CSS3']
+        stack: ['Visual Studio Code','HTML',' CSS','JS' , 'Google Sheets', 'OpenStreetMap', 'Bootstrap','Mapme','Mppedin','Figma']
+    },
+    realestate: {
+        num: '04 / 04', 
+        title: 'Premium Real Estate Engine', 
+        img: 'static/imga.png',
+        desc: `
+            <div style="margin-bottom:20px">
+                <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">System Objective</h4>
+                <p style="font-size:0.8rem; line-height:1.6; color:var(--text-dim)">
+                    A sophisticated property management platform designed to handle large-scale real estate listings with a focus on visual performance and speed.
+                </p>
+            </div>
+            <div style="margin-bottom:20px">
+                <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">Technical Implementation</h4>
+                <ul style="padding-left:15px; font-size:0.75rem; color:var(--text-dim); line-height:1.6">
+                    <li><b>Architecture:</b> Django-driven CRUD system with advanced query filtering for property attributes.</li>
+                    <li><b>Design System:</b> High-fidelity UI using CSS Grid and Custom Variables for consistent branding.</li>
+                    <li><b>Performance:</b> Image lazy-loading and optimized database indexing for rapid search results.</li>
+                </ul>
+            </div>
+        `,
+        stack: ['Django', 'CSS ', 'SQL', 'Figma']
     }
 };
 
