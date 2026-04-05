@@ -563,14 +563,33 @@ section.visible { opacity:1; transform:translateY(0); }
     .ov-inner { padding: 60px 5% 30px 5%; }
     .ov-side-layout { grid-template-columns: 1fr; gap: 25px; }
     .ov-img-side, .ov-img-full { max-height: 300px; }
-    .ov-close { margin-bottom: 30px; }
 }
 
 /* تعطيل الماوس المخصص للمس */
 @media (pointer: coarse) {
     .cursor, .cursor-ring { display: none; }
 }
-
+.ov-close {
+    background: none;
+    border: 1px solid rgba(212, 180, 101, 0.3);
+    color: var(--gold-dim);
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 40px;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.ov-close:hover {
+    background: var(--gold-dim);
+    color: var(--bg);
+}
+.ov-close::before { content: '←'; }
 </style>
 </head>
 <body>
@@ -824,137 +843,130 @@ section.visible { opacity:1; transform:translateY(0); }
 </div>
 
 <script>
-// Cursor
-function toggleMenu() {
-  const menuBtn = document.getElementById('mobile-menu');
-  const navList = document.getElementById('nav-list');
-  
-  menuBtn.classList.toggle('active');
-  navList.classList.toggle('active');
+/** * 1. بيانات المشاريع (Project Data)
+ * قمت بتجهيز المحتوى الذي سيظهر داخل النافذة (Overlay) لكل مشروع
+ */
+const projects = {
+    ma3an: {
+        num: '01 / 04', 
+        title: 'Ma3an (معاً)', 
+        img: 'static/imgt.png',
+        desc: `
+            <p><strong style="color:var(--gold-dim)">The Challenge:</strong> Tour agencies struggle with group organization and fragmented communication.</p><br>
+            <p><strong style="color:var(--gold-dim)">The Solution:</strong> A unified platform for live tracking, real-time schedules, and supervisor dashboards.</p>
+        `,
+        stack: ['Python', 'Django', 'MySQL', 'APIs']
+    },
+    realestate: {
+        num: '02 / 04', 
+        title: 'Real Estate Platform', 
+        img: 'static/imga.png',
+        desc: `<p>A property listing platform with advanced UI/UX controls and seamless Dark Mode integration using CSS variables.</p>`,
+        stack: ['Python', 'Django', 'JavaScript', 'CSS']
+    },
+    planteer: {
+        num: '03 / 04', 
+        title: 'Planteer Platform', 
+        img: 'static/planteer.jpg',
+        desc: `<p>A full-stack botanical directory and community platform for plant enthusiasts with a refined design system.</p>`,
+        stack: ['Python', 'Django', 'JavaScript', 'HTML']
+    },
+    taibah: {
+        num: '04 / 04', 
+        title: 'Interactive University Map', 
+        img: 'static/imgl.png',
+        desc: `
+            <p><strong style="color:var(--gold-dim)">The Solution:</strong> An interactive 2D/3D campus visualization with indoor navigation for Taibah University.</p>
+        `,
+        stack: ['Python', 'JavaScript', 'Google Sheets API', 'CSS3']
+    }
+};
 
-  // منع التمرير في الصفحة الخلفية عند فتح المنيو
-  if (navList.classList.contains('active')) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = '';
-  }
+/** * 2. وظائف فتح وإغلاق تفاصيل المشاريع (Overlay)
+ */
+function openProject(id) {
+    const project = projects[id];
+    const ov = document.getElementById('ov');
+    const body = document.getElementById('ovBody');
+    
+    if (!project) return;
+
+    // بناء المحتوى المطفّي والناعم داخل النافذة
+    body.innerHTML = `
+        <div class="ov-side-layout">
+            <div class="ov-img-container">
+                <img src="${project.img}" class="ov-img-side" alt="${project.title}" onerror="this.style.display='none'">
+            </div>
+            <div class="ov-text-container" style="text-align: left;">
+                <div class="meta" style="color:var(--gold-dim); font-size: 0.7rem; margin-bottom:10px">${project.num}</div>
+                <h2 class="sec-title" style="font-size:2rem; margin-bottom:20px; color:var(--cream)">${project.title}</h2>
+                <div class="ov-description" style="font-size:0.8rem; color:var(--text-dim); line-height:1.8">
+                    ${project.desc}
+                </div>
+                <div class="ov-tags" style="margin-top:30px; display: flex; flex-wrap: wrap; gap: 8px;">
+                    ${project.stack.map(s => `<span class="ov-tag" style="font-size:0.55rem; padding:6px 12px; border:1px solid rgba(212,180,101,0.2); color:var(--gold-dim); background: rgba(212,180,101,0.05);">${s}</span>`).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    ov.classList.add('active');
+    document.body.style.overflow = 'hidden'; // منع السكرول عند فتح التفاصيل
 }
+
+function closeProject() {
+    document.getElementById('ov').classList.remove('active');
+    document.body.style.overflow = ''; // إعادة السكرول
+}
+
+/** * 3. وظيفة المنيو للجوال (Hamburger to X)
+ */
+function toggleMenu() {
+    const menuBtn = document.getElementById('mobile-menu');
+    const navList = document.getElementById('nav-list');
+    
+    menuBtn.classList.toggle('active');
+    navList.classList.toggle('active');
+
+    // منع التمرير عند فتح المنيو
+    if (navList.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+}
+
+/** * 4. تحريك الماوس المخصص (Custom Cursor)
+ */
 const cur = document.getElementById('cur');
 const ring = document.getElementById('ring');
-document.addEventListener('mousemove', e => {
-  cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px';
-  ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
-});
-document.querySelectorAll('a,button,.proj-card,.clink,.skill-chip,.edu-block,.exp-item,.course-card,.ov-tag').forEach(el => {
-  el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-  el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-});
 
-// Scroll Reveal
+if(cur && ring) {
+    document.addEventListener('mousemove', e => {
+        cur.style.left = e.clientX + 'px'; 
+        cur.style.top = e.clientY + 'px';
+        ring.style.left = e.clientX + 'px'; 
+        ring.style.top = e.clientY + 'px';
+    });
+
+    // إضافة تأثير التحويم (Hover) لجميع العناصر التفاعلية
+    document.querySelectorAll('a, button, .proj-card, .clink, .skill-chip').forEach(el => {
+        el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+}
+
+/** * 5. ظهور الأقسام بنعومة عند السكرول (Scroll Reveal)
+ */
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    entries.forEach(e => { 
+        if(e.isIntersecting) {
+            e.target.classList.add('visible'); 
+        }
+    });
 }, { threshold: 0.1 });
+
 document.querySelectorAll('section').forEach(s => observer.observe(s));
-
-// Project Data
-const projects = {
-  ma3an: {
-    num: '01 / 04', title: 'Ma3an (معاً)', img:  " static/imgt.png",
-    desc: `
-      <p><strong style="color:var(--gold)">The Challenge</strong><br>Tour agencies struggle with group organization, lost travelers, and fragmented communication across large events like Hajj and Umrah.</p><br>
-      <p><strong style="color:var(--gold)">The Solution</strong><br>An all-in-one unified platform synchronizing live location tracking, real-time schedules, and supervisor dashboards.</p><br>
-      <strong style="color:var(--gold)">Key Features</strong>
-      <ul>
-        <li>Live Group Monitoring &amp; Attendance Tracking</li>
-        <li>Geofencing Alerts &amp; Real-time Schedule Updates</li>
-        <li>Unified Communication Hub for Supervisors &amp; Travelers</li>
-        <li>Scalable Backend supporting Hajj, Umrah, and School trips</li>
-      </ul>
-    `,
-    stack: ['Python','Django','MySQL','APIs','HTML','CSS']
-  },
-  realestate: {
-    num: '02 / 04', title: 'Real Estate Platform', img: "static/imga.png",
-    desc: `<p>A sophisticated property listing platform featuring seamless Dark Mode implementation. Focused on delivering a modern, responsive interface with advanced UI/UX controls and CSS variable-driven themes.</p>`,
-    stack: ['Python','Django','JavaScript','CSS','MySQL']
-  },
-  planteer: {
-    num: '03 / 04', title: 'Planteer Platform', img: "static/planteer.jpg",
-    desc: `<p>A dynamic full-stack web application for plant enthusiasts featuring botanical directories, user profiles, and community engagement features with a refined, nature-inspired design system.</p>`,
-    stack: ['Python','Django','JavaScript','HTML','CSS']
-  },
-  taibah: {
-    num: '04 / 04', title: 'Interactive University Map', img: "static/imgl.png",
-    desc: `
-      <p><strong style="color:var(--gold)">The Challenge</strong><br>Large university campuses pose navigation challenges, causing lost time and confusion for students and visitors.</p><br>
-      <p><strong style="color:var(--gold)">The Solution</strong><br>A web-based interactive map for Taibah University with seamless indoor and outdoor navigation.</p><br>
-      <strong style="color:var(--gold)">Key Features</strong>
-      <ul>
-        <li>Interactive 2D/3D Campus Visualization</li>
-        <li>Indoor Navigation for specific university buildings</li>
-        <li>Advanced Search for departments, labs, and offices</li>
-        <li>Multi-floor Switching &amp; Real-time Routing</li>
-      </ul>
-    `,
-    stack: ['Python','HTML','CSS3','JavaScript','Google Sheets','API']
-  }
-};
-
-function openProject(id) {
-    // استبدلي روابط الصور في كائن projects بهذه الروابط المباشرة
-const projects = {
-  ma3an: {
-    num: '01 / 04', title: 'Ma3an (معاً)', img: "static/imgt.png", // رابط مباشر
-    // ... باقي الكود
-  },
-  taibah: {
-    num: '04 / 04', title: 'Interactive University Map', img: "static/imgl.png", // رابط مباشر
-    // ... باقي الكود
-  },
-  // طبقي نفس الشيء للبقية...
-};
-  const p = projects[id];
-  const tags = p.stack.map(t => `<span class="ov-tag">${t}</span>`).join('');
-  let content = '';
-
-  // إذا كان المشروع "معاً" أو "الخريطة"، استخدم التصميم الطولي (صورة كبيرة)
-  if (id === 'ma3an' || id === 'taibah') {
-    content = `
-      <div class="ov-full-layout">
-        <img src="${p.img}" class="ov-img-full">
-        <div>
-          <h2 style="font-family:'Cormorant Garamond', serif; font-size:3.5rem; color:var(--gold); line-height:1.2;">${p.title}</h2>
-          <div style="margin:25px 0; color:var(--text-dim); font-size:1.1rem; line-height:1.8;">${p.desc}</div>
-          <div style="margin-top:30px;">${tags}</div>
-        </div>
-      </div>`;
-  } 
-  // لبقية المشاريع، استخدم التصميم الجانبي
-  else {
-    content = `
-      <div class="ov-side-layout">
-        <img src="${p.img}" class="ov-img-side">
-        <div>
-          <h2 style="font-family:'Cormorant Garamond', serif; font-size:2.8rem; color:var(--gold); margin-bottom:20px;">${p.title}</h2>
-          <div style="color:var(--text-dim); line-height:1.8; margin-bottom:30px;">${p.desc}</div>
-          <div>${tags}</div>
-        </div>
-      </div>`;
-  }
-
-  document.getElementById('ovBody').innerHTML = content;
-  document.getElementById('ov').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeProject() {
-  document.getElementById('ov').classList.remove('active');
-  document.body.style.overflow = '';
-}
-document.getElementById('ov').addEventListener('click', e => {
-  if(e.target === document.getElementById('ov')) closeProject();
-});
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeProject(); });
-
 </script>
 </body>
 </html>
