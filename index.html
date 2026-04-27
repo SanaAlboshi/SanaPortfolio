@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 <style>
-  
+
     /* ── LAPTOP ANIMATION STYLES ── */
     #about {
   min-height:100vh; 
@@ -117,7 +117,9 @@ nav {
   display:flex; justify-content:space-between; align-items:center;
   background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
   backdrop-filter: blur(12px);
+  
 }
+
 .logo {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.1rem; letter-spacing: 0.2em;
@@ -617,18 +619,102 @@ section.visible { opacity:1; transform:translateY(0); }
     margin-top: 25px;
     color: var(--gold-light);
 }
-
 .ov-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 35px;
 }
-
 @media (max-width: 768px) {
     .ov-side-layout { gap: 15px; }
     .ov-img-container { border: none; } /* إلغاء الإطار على الجوال */
     .ov-text-container { text-align: center; } /* تمركز النص للجوال */
+}
+/* ── LIGHT MODE ── */
+body.light {
+  --bg: #e9e3d6;
+  --surface: #ffffff;
+  --surface2: #e6dfd2;
+
+  /* نصوص أغمق */
+  --text: #483725;        /* الأساسي - بني غامق */
+  --text-dim: #413424;    /* الثانوي */
+  --text-muted: #4a3b2f;  /* النص الخفيف */
+
+--text: #5f4b36;
+--text-dim: #413424;
+--text-muted: #8a6f3e;
+}
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border-strong);
+  color: var(--gold);
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 15px;
+  transition: 0.3s;
+}
+
+.theme-toggle:hover {
+  background: var(--gold);
+  color: var(--bg);
+}
+body.light .sec-title {
+  color: #8a6f3e;
+}
+
+body.light .sec-title em {
+  color: #a8894f; /* أغمق شوي للتمييز */
+}
+
+body.light .sec-label {
+  color: #b89a55; /* نفس فكرة البيج لكن أوضح */
+}
+body.light .sec-title {
+  color: #aa9055; /* بيج ذهبي هادي */
+}
+
+body.light .sec-title em {
+  color: #a8894f; /* أغمق شوي للتمييز */
+}
+
+body.light .sec-label {
+  color: #8f7841; /* نفس فكرة البيج لكن أوضح */
+}
+
+/* ── FIX PROJECT BUTTON COLOR IN LIGHT MODE ── */
+.proj-name {
+  color: var(--cream);
+}
+body.light .proj-name {
+  color: #483522; /* بني غامق نفس النص */
+}
+
+body.light .proj-btn:hover {
+  background: #7d6230 !important;
+  color: #fff !important;
+}
+/* ── FIX ALL HEADINGS IN LIGHT MODE ── */
+
+body.light .edu-block h3,
+body.light .exp-item h3,
+body.light .course-card strong {
+  color: #84693d; /* بني غامق واضح وفخم */
+}
+body.light .overlay {
+  background: rgba(255, 255, 255, 0.95);
+}
+body.light .ov-description {
+  color: #4c392a;
+}
+
+body.light .meta {
+  color: #7d6230;
+}
+
+body.light .sec-title {
+  color: #563a23 !important;
 }
 </style>
 </head>
@@ -639,7 +725,7 @@ section.visible { opacity:1; transform:translateY(0); }
 
 <nav>
   <a href="#about" class="logo">Sana <em>Alboshi</em></a>
-  
+
   <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
     <span class="bar"></span>
     <span class="bar"></span>
@@ -654,6 +740,8 @@ section.visible { opacity:1; transform:translateY(0); }
     <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
     <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
   </ul>
+
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button>
 </nav>
 <!-- HERO -->
 <section id="about">
@@ -1011,7 +1099,6 @@ const projects = {
         stack: ['Django', 'CSS ', 'SQL', 'Figma']
     }
 };
-
 /** * 2. وظائف فتح وإغلاق تفاصيل المشاريع (Overlay)
  */
 function openProject(id) {
@@ -1065,7 +1152,6 @@ function toggleMenu() {
         document.body.style.overflow = '';
     }
 }
-
 /** * 4. تحريك الماوس المخصص (Custom Cursor)
  */
 const cur = document.getElementById('cur');
@@ -1096,7 +1182,55 @@ const observer = new IntersectionObserver(entries => {
     });
 }, { threshold: 0.1 });
 
+
 document.querySelectorAll('section').forEach(s => observer.observe(s));
+function toggleTheme() {
+    document.body.classList.toggle("light");
+
+    if (document.body.classList.contains("light")) {
+        localStorage.setItem("theme", "light");
+    } else {
+        localStorage.setItem("theme", "dark");
+    }
+}
+
+window.addEventListener("load", () => {
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "light") {
+        document.body.classList.add("light");
+    }
+
+    
+    
+});
+const btn = document.getElementById("themeBtn");
+
+// تحميل الوضع المحفوظ
+window.addEventListener("load", () => {
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "light") {
+        document.body.classList.add("light");
+        btn.textContent = "🌙";
+    } else {
+        btn.textContent = "☀️";
+    }
+});
+
+// التبديل
+function toggleTheme() {
+    document.body.classList.toggle("light");
+
+    if (document.body.classList.contains("light")) {
+        localStorage.setItem("theme", "light");
+        btn.textContent = "🌙"; // في اللايت يظهر قمر
+    } else {
+        localStorage.setItem("theme", "dark");
+        btn.textContent = "☀️"; // في الدارك يظهر شمس
+    }
+}
+
 </script>
 </body>
 </html>
