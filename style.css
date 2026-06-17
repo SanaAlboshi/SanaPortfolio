@@ -190,12 +190,12 @@ section.visible { opacity:1; transform:translateY(0); }
   font-family:'DM Mono',monospace; font-size:0.7rem;
   color:var(--gold); margin: 10px 0;
 }
-.exp-item ul { list-style:none; margin-top:15px; }
-.exp-item li {
+.exp-item ul, .edu-block ul { list-style:none; margin-top:15px; padding:0; }
+.exp-item li, .edu-block li {
   color:var(--text-dim); font-size:0.9rem; line-height:1.8;
   margin-bottom:8px; display:flex; gap:10px;
 }
-.exp-item li::before { content:'—'; color:var(--gold); }
+.exp-item li::before, .edu-block li::before { content:'—'; color:var(--gold); }
 
 /* ── COURSES (New Grid) ── */
 .courses-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:15px; }
