@@ -115,7 +115,48 @@ const projects = {
             </div>
         `,
         stack: ['Django', 'CSS ', 'SQL', 'Figma']
-    }
+    },
+jewelry: {
+    num: '05 / 05',
+    title: 'Luxury Jewelry Website',
+    img: 'static/jewelry.jpg',
+    desc: `
+        <div style="margin-bottom:20px">
+            <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">
+                Luxury E-commerce Experience
+            </h4>
+
+            <p style="font-size:0.8rem; line-height:1.6; color:var(--text-dim)">
+                Designed a luxury jewelry e-commerce website in Figma,
+                focusing on creating an elegant user experience that reflects
+                premium branding while providing a seamless shopping journey.
+            </p>
+        </div>
+
+        <div style="margin-bottom:20px">
+            <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">
+                Key Features
+            </h4>
+
+            <ul style="padding-left:15px; font-size:0.75rem; color:var(--text-dim); line-height:1.7">
+                <li>User research & competitor analysis.</li>
+                <li>Wireframes and high-fidelity UI.</li>
+                <li>Responsive desktop & mobile layouts.</li>
+                <li>Design System with reusable components.</li>
+                <li>Shopping flow, product pages and checkout.</li>
+            </ul>
+        </div>
+    `,
+    stack: [
+        'Figma',
+        'UI Design',
+        'UX Design',
+        'Design System',
+        'Auto Layout',
+        'Prototyping'
+    ]
+}
+    
 };
 /** * 2. وظائف فتح وإغلاق تفاصيل المشاريع (Overlay)
  */
