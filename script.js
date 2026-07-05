@@ -117,9 +117,9 @@ const projects = {
         stack: ['Django', 'CSS ', 'SQL', 'Figma']
     },
 jewelry: {
-    num: '05 / 05',
+    num:'05 / 05',
     title: 'Luxury Jewelry Website',
-    img: 'static/jewelry.jpg',
+    img:'static/jewelry.jpg',
     desc: `
         <div style="margin-bottom:20px">
             <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">
