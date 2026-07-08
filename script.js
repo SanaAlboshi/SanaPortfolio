@@ -143,20 +143,75 @@ jewelry: {
                 <li>Wireframes and high-fidelity UI.</li>
                 <li>Responsive desktop & mobile layouts.</li>
                 <li>Design System with reusable components.</li>
-                <li>Shopping flow, product pages and checkout.</li>
             </ul>
         </div>
     `,
     stack: [
         'Figma',
-        'UI Design',
-        'UX Design',
+        'UI/UX Design',
         'Design System',
         'Auto Layout',
         'Prototyping'
     ]
-}
-    
+},
+   anan: {
+    num: '06 / 06',
+    title: 'ANAN Resort Website UI/UX',
+    img: 'static/ANAN.png',
+
+    desc: `
+        <div style="margin-bottom:20px">
+            <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">
+                Project Overview
+            </h4>
+
+            <p style="font-size:0.8rem; line-height:1.6; color:var(--text-dim)">
+                Designed the complete user experience and interface for ANAN,
+                a luxury mountain resort website. The goal was to create a calm,
+                premium digital experience that reflects elegance, comfort,
+                and nature while maintaining intuitive navigation.
+            </p>
+        </div>
+
+        <div style="margin-bottom:20px">
+            <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">
+                Design Process
+            </h4>
+
+            <ul style="padding-left:15px; font-size:0.75rem; color:var(--text-dim); line-height:1.7">
+                <li>User research and competitor analysis.</li>
+                <li>Information architecture and user flow.</li>
+                <li>Wireframes for key website pages.</li>
+                <li>High-fidelity responsive UI design.</li>
+                <li>Luxury color palette and typography system.</li>
+                <li>Interactive prototype in Figma.</li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 style="color:var(--gold-dim); margin-bottom:8px; font-size:0.9rem">
+                Outcome
+            </h4>
+
+            <p style="font-size:0.8rem; line-height:1.6; color:var(--text-dim)">
+                Delivered a modern resort booking experience with a clean
+                visual hierarchy, immersive imagery, responsive layouts,
+                and reusable UI components to ensure consistency across the website.
+            </p>
+        </div>
+    `,
+
+    stack: [
+        'Figma',
+        'UI/UX Design',
+        'Wireframing',
+        'User Flow',
+        'Design System',
+        'Auto Layout',
+        'Prototype',
+        'Responsive Design'
+    ]
+}, 
 };
 /** * 2. وظائف فتح وإغلاق تفاصيل المشاريع (Overlay)
  */
